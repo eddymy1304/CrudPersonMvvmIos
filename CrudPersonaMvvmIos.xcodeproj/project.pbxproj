@@ -10,9 +10,22 @@
 		6401C2982D8BD53900BC2385 /* CrudPersonaMvvmIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrudPersonaMvvmIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		644B6B8C2DC3D4AD00595DD0 /* Exceptions for "CrudPersonaMvvmIos" folder in "CrudPersonaMvvmIos" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6401C2972D8BD53900BC2385 /* CrudPersonaMvvmIos */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6401C29A2D8BD53900BC2385 /* CrudPersonaMvvmIos */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				644B6B8C2DC3D4AD00595DD0 /* Exceptions for "CrudPersonaMvvmIos" folder in "CrudPersonaMvvmIos" target */,
+			);
 			path = CrudPersonaMvvmIos;
 			sourceTree = "<group>";
 		};
@@ -254,6 +267,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CrudPersonaMvvmIos/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CrudPersonaMvvmIos/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,6 +296,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CrudPersonaMvvmIos/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CrudPersonaMvvmIos/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
