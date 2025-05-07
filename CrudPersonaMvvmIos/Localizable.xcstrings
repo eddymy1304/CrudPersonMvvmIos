@@ -1,7 +1,20 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "List of persons" : {
 
+    },
+    "title_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CrudPersonMvvmIos"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }

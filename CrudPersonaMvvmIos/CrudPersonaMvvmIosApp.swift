@@ -10,10 +10,13 @@ import SwiftData
 
 @main
 struct CrudPersonaMvvmIosApp: App {
+    
+    @StateObject var dependencyContainer: DependencyContainer = DependencyContainer()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(dependencyContainer)
         }
     }
 }
