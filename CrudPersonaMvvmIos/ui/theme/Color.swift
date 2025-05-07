@@ -11,6 +11,8 @@ extension Color {
     
     static let primaryColor = Color("PrimaryColor")
     
+    static let secundaryColor = Color("SecundaryColor")
+    
     static let backgroundColor = Color("BackgroundColor")
     
     static let secundaryBackgroundColor = Color("SecundaryBackgroundColor")
@@ -19,5 +21,5 @@ extension Color {
     
     static let textSecundaryColor = Color("TextSecundaryColor")
     
-    
+    static let surfaceColor = Color("SurfaceColor")
 }

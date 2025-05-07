@@ -23,3 +23,5 @@ extension Font {
     static let appBody = Font.appFontRegular(size: 16, relativeTo: .body)
     static let appCaption = Font.appFontRegular(size: 12, relativeTo: .caption)
 }
+
+
