@@ -15,22 +15,102 @@ struct DetailScreen: View {
     }
     
     var body: some View {
+        
         VStack {
+            
+            //Photo 
             ZStack(alignment: .topTrailing){
-                Button(action: {}) {
+                Button(action: {
+                    
+                }) {
                     Image(systemName: "plus")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(.secundary)
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(Color.primaryColor)
                 }
-                .padding(.all, .paddingSmall)
+                .padding(.all, .paddingExtraSmall)
                 
                 Image(systemName: "person")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 160, height: 160)
+                    .frame(width: 120, height: 120)
+            }.padding(.vertical, .paddingNormal)
+            
+            HStack(alignment: .center){
+                FilledTextField(
+                    text: $viewModel.person.documentNumber,
+                    placeholder: "document_number",
+                    iconStart: "person",
+                    iconEnd: "xmark",
+                    onClickIconEnd: {
+                        viewModel.onChangedDocumentNumber(documentNumber: "")
+                    }
+                ) { _, newValue in
+                    viewModel.onChangedDocumentNumber(documentNumber: newValue)
+                }
+                
+                Button(action:{
+                    viewModel.findPerson()
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: .paddingMid)
+                            .foregroundStyle(Color.primaryColor)
+                        Image(systemName: "paperplane.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.white)
+                            .padding(.paddingMid)
+                    }
+                }
+                .fixedSize()
+                
+            }.padding(.horizontal, .paddingNormal)
+            
+            FilledTextField(
+                text: $viewModel.person.name,
+                placeholder: "name"
+            ) { _, newValue in
+                viewModel.onChangedName(name: newValue)
+            }.padding(.horizontal, .paddingNormal)
+                .padding(.top,.paddingSmall)
+            
+            FilledTextField(
+                text: $viewModel.person.lastName,
+                placeholder: "last_name"
+            ) { _, newValue in
+                viewModel.onChangedLastName(lastName: newValue)
+            }.padding(.horizontal, .paddingNormal)
+                .padding(.top,.paddingSmall)
+            
+            @State var age = if(viewModel.person.age == nil){
+                ""
+            } else {
+                String(viewModel.person.age!)
             }
+            FilledTextField(
+                text: $age,
+                placeholder: "age"
+            ) { _, newValue in
+                viewModel.onChangedAge(age: newValue)
+            }.padding(.horizontal, .paddingNormal)
+                .padding(.top,.paddingSmall)
+            
+            
+            Button(action:{
+                viewModel.save()
+            }) {
+                Text("Save")
+                    .font(.appBody)
+                    .bold()
+                    .foregroundStyle(.white)
+                    .padding(.paddingMid)
+                    .background{
+                        RoundedRectangle(cornerRadius: .paddingMid)
+                            .foregroundStyle(Color.primaryColor)
+                    }
+            }.padding(.vertical, .paddingNormal)
+            
         }
         .toolbar {
             ToolbarApp(

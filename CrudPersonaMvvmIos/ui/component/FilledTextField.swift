@@ -9,7 +9,9 @@ import SwiftUI
 
 struct FilledTextField : View {
     
-    var placeHolder: String = ""
+    @Binding var text: String
+    
+    var placeholder: String = ""
     
     var enabled: Bool = true
     
@@ -21,8 +23,6 @@ struct FilledTextField : View {
     
     var onClickIconEnd: (() -> Void)? = nil
     
-    @State var text: String = ""
-    
     @FocusState private var isFocused: Bool
     
     var onChange: (_ oldValue:String, _ newValue:String) -> Void
@@ -30,13 +30,17 @@ struct FilledTextField : View {
     var body: some View {
         
         let paddingLeading: CGFloat = iconStart == nil ?
-            .paddingMid : .paddingLarge
+            .paddingNormal : .paddingXxxLarge
         
         let paddingTrailing: CGFloat = iconEnd == nil ?
-            .paddingMid : .paddingLarge
+            .paddingNormal : .paddingXxxLarge
+        
+        let placeholderFormat = String(
+            NSLocalizedString(placeholder, comment: "")
+        )
         
         TextField(
-            placeHolder,
+            placeholderFormat,
             text: $text
         )
         .padding(.leading, paddingLeading)
@@ -100,10 +104,15 @@ struct FilledTextField : View {
     }
 }
 
-#Preview() {
+#Preview {
+    
+    @Previewable @State var text: String = ""
+    
     FilledTextField(
-        placeHolder: "PlaceHolder...",
-        iconEnd: "chevron.right"
+        text: $text,
+        placeholder: "PlaceHolder...",
+        iconStart: "person",
+        iconEnd: "xmark",
     ) { _,_ in
         
     }

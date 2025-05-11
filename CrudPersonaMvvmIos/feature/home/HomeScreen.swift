@@ -24,7 +24,7 @@ struct HomeScreen: View {
         ZStack{
             
             VStack{
-                Text("List of persons")
+                Text("list_of_persons")
                     .font(.appBody)
                     .bold()
                     .frame(
