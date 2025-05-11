@@ -61,3 +61,35 @@ struct PersonMapper : ResponseToDomainMapper, EntityToDomainMapper {
         )
     }
 }
+
+extension PersonModel {
+    
+    func asEntity() -> PersonEntity {
+        return PersonMapper().asEntity(domain: self)
+    }
+    
+}
+
+extension PersonEntity {
+    
+    func asDomain() -> PersonModel {
+        return PersonMapper().asDomain(entity: self)
+    }
+    
+}
+
+extension PersonResponse {
+    
+    func asDomain() -> PersonModel {
+        return PersonMapper().asDomain(response: self)
+    }
+}
+
+extension Array where Element == PersonEntity {
+    
+    func asDomain() -> [PersonModel] {
+        //return self.map{ $0.asDomain() }
+        return self.map { item in item.asDomain() }
+    }
+    
+}
