@@ -261,6 +261,8 @@
 		};
 		6401C2A92D8BD53A00BC2385 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6401C29A2D8BD53900BC2385 /* CrudPersonaMvvmIos */;
+			baseConfigurationReferenceRelativePath = config/Debug.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -290,6 +292,8 @@
 		};
 		6401C2AA2D8BD53A00BC2385 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 6401C29A2D8BD53900BC2385 /* CrudPersonaMvvmIos */;
+			baseConfigurationReferenceRelativePath = config/Release.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

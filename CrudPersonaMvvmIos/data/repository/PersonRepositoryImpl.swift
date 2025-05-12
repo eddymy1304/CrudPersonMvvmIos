@@ -45,7 +45,19 @@ class PersonRepositoryImpl : PersonRepository {
     }
     
     func findPersonByDocumentNumber(documentNumber: String) async -> Result<PersonModel, Error> {
-        return .success(PersonModel())
+        do {
+            let response = try await NetworkManager
+                .shared
+                .request(
+                    endpoint: "v2/reniec/dni?numero=\(documentNumber)",
+                    responseType: PersonResponse.self
+                )
+            print("response: \(response)")
+            return .success(response.asDomain())
+            
+        } catch {
+            return .failure(error)
+        }
     }
     
     func getPersonByDocumentNumber(documentNumber: String) async -> Result<PersonModel, Error> {

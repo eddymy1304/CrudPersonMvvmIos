@@ -5,7 +5,7 @@
 //  Created by Eddy David Mendoza on 2/05/25.
 //
 
-struct PersonResponse {
+struct PersonResponse : Codable {
     
     var apellidoMaterno: String? = nil
     
