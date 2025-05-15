@@ -5,5 +5,5 @@
 //  Created by Eddy David Mendoza on 11/05/25.
 //
 
-API_KEY_SEARCH_DNI = apis-token-13717.SAZ5UyPT63sMt6cJuH5vnxkKYjKeQXaK
-BASE_URL_SEARCH_DNI = https://api.apis.net.pe/
+API_KEY_SEARCH_DNI = "apis-token-13717.SAZ5UyPT63sMt6cJuH5vnxkKYjKeQXaK"
+BASE_URL_SEARCH_DNI = https:/$()/api.apis.net.pe/

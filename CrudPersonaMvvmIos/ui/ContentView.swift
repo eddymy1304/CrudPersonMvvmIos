@@ -20,17 +20,19 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            HomeScreen(viewModel: container.makeHomeViewModel(), onNavigateToDetail: { numberDocument in
+            HomeRoot(viewModel: container.makeHomeViewModel(), onNavigateToDetail: { numberDocument in
                 path.append(AppRoute.detail(documentNumber: numberDocument))
             })
             .navigationDestination(for: AppRoute.self){ route in
                 switch route {
-                case .detail(documentNumber: _):
-                    DetailScreen(
-                        viewModel: container.makeDetailViewModel()
+                case .detail(documentNumber: let document):
+                    DetailRoot(
+                        viewModel: container.makeDetailViewModel(
+                            documentNumber: document
+                        )
                     )
                 case .home:
-                    HomeScreen(
+                    HomeRoot(
                         viewModel: container.makeHomeViewModel()
                     ) { numberDocument in
                         path.append(AppRoute.detail(documentNumber: numberDocument))

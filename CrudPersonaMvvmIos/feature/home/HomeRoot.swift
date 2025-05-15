@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct HomeScreen: View {
+struct HomeRoot: View {
     
     @StateObject private var viewModel: HomeViewModel
     
@@ -21,41 +21,20 @@ struct HomeScreen: View {
     }
     
     var body: some View {
-        ZStack{
-            
-            VStack{
-                Text("list_of_persons")
-                    .font(.appBody)
-                    .bold()
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .leading
-                    )
-                    .padding(.horizontal, .paddingNormal)
-                
-                List(viewModel.personList, id: \.documentNumber) { item in
-                    PersonItem(
-                        person: item,
-                        onClickDelete: {
-                            viewModel.deletePerson(person: item)
-                        }
-                    ) {
-                        onNavigateToDetail(item.documentNumber)
-                    }
-                }.listStyle(.plain)
-                
-            }
-            
-            VStack{
-                Spacer()
-                HStack {
-                    Spacer()
-                    FabButton(icon: "plus") {
-                        onNavigateToDetail("")
-                    }
-                    .padding(.paddingLarge)
+        HomeScreen(
+            personList: viewModel.personList,
+            onClickDelete: { person in
+                Task {
+                    await viewModel.deletePerson(person: person)
                 }
+            }, onClickItem: { person in
+                onNavigateToDetail(person.documentNumber)
+            }, onClickAdd: {
+                onNavigateToDetail("")
             }
+        )
+        .task {
+            await viewModel.getPersons()
         }
         .toolbar {
             ToolbarApp(
@@ -66,9 +45,61 @@ struct HomeScreen: View {
     }
 }
 
+struct HomeScreen: View {
+    
+    var personList: [PersonModel]
+    
+    var onClickDelete: (PersonModel) -> Void
+    
+    var onClickItem: (PersonModel) -> Void
+    
+    var onClickAdd: () -> Void
+    
+    var body: some View {
+        ZStack{
+            VStack{
+                Text("list_of_persons")
+                    .font(.appBody)
+                    .bold()
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, .paddingNormal)
+                
+                List(personList, id: \.documentNumber) { item in
+                    PersonItem(
+                        person: item,
+                        onClickDelete: { onClickDelete(item) }
+                    ) {
+                        onClickItem(item)
+                    }
+                }.listStyle(.plain)
+                
+            }
+            
+            VStack{
+                Spacer()
+                HStack {
+                    Spacer()
+                    FabButton(icon: "plus") {
+                        onClickAdd()
+                    }
+                    .padding(.paddingLarge)
+                }
+            }
+        }
+    }
+}
+
 #Preview("HomeScreen") {
-    let viewmodel = HomeViewModel()
-    HomeScreen(viewModel: viewmodel) { _ in
+    
+    HomeScreen(personList: []) { _ in
+        
+    } onClickItem: { _ in
+        
+    } onClickAdd: {
         
     }
+    
 }

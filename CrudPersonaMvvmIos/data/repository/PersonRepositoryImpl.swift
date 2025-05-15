@@ -46,6 +46,7 @@ class PersonRepositoryImpl : PersonRepository {
     
     func findPersonByDocumentNumber(documentNumber: String) async -> Result<PersonModel, Error> {
         do {
+            print("repository impl find person: \(documentNumber)")
             let response = try await NetworkManager
                 .shared
                 .request(

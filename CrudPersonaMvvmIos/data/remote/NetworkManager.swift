@@ -11,8 +11,10 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     private var defaultHeaders: [String: String] {
+        let apiKey = "Bearer \(ApiConfig.apiKey)"
+        print("apikey: \(apiKey)")
         return [
-            "Authorization": "Bearer \(ApiConfig.apiKey)",
+            "Authorization": apiKey,
             "Content-Type": "application/json"
         ]
     }
@@ -26,16 +28,19 @@ final class NetworkManager {
         body: Data? = nil,
         responseType: T.Type
     ) async throws -> T {
-        guard let url = URL(string: ApiConfig.baseUrl + endpoint) else {
+        let baseUrl = ApiConfig.baseUrl
+        print("url: \(baseUrl+endpoint)")
+        guard let url = URL(string: baseUrl + endpoint) else {
             throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = method.getMethod()
-        //request.addValue("Bearer \(ApiConfig.apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(ApiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         
-        let allHeaders = defaultHeaders.merging(headers ?? [:]) { $1 }
-        allHeaders.forEach { header in request.setValue(header.value, forHTTPHeaderField: header.key) }
+        //let allHeaders = defaultHeaders.merging(headers ?? [:]) { $1 }
+        //headers!.forEach { header in request.setValue(header.value, forHTTPHeaderField: header.key) }
         
         if let body = body {
             request.httpBody = body

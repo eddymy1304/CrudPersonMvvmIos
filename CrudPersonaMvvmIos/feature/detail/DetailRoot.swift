@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DetailScreen: View {
+struct DetailRoot: View {
     
     @StateObject private var viewModel : DetailViewModel
     
@@ -16,13 +16,68 @@ struct DetailScreen: View {
     
     var body: some View {
         
+        DetailScreen(
+            person: $viewModel.person,
+            onChangedDocumentNumber: { doc in
+                viewModel.onChangedDocumentNumber(documentNumber: doc)
+            },
+            onChangedName: { name in
+                viewModel.onChangedName(name: name)
+            },
+            onChangedLastName: { lastname in
+                viewModel.onChangedLastName(lastName: lastname)
+            },
+            onChangedAge: { age in
+                viewModel.onChangedAge(age: age)
+            },
+            onClickAddPhoto: {
+                
+            },
+            onClickFind: {
+                Task {
+                    await viewModel.findPerson()
+                }
+            }
+        ) {
+            Task {
+                await viewModel.save()
+            }
+        }
+        .task {
+            await viewModel.getPersonByDocumentNumber()
+        }
+        .toolbar {
+            ToolbarApp(
+                title: AppScreens.detail.title
+            )
+        }
+    }
+}
+
+struct DetailScreen: View {
+    
+    @Binding var person: PersonModel
+    
+    var onChangedDocumentNumber: (String) -> Void
+    
+    var onChangedName: (String) -> Void
+    
+    var onChangedLastName: (String) -> Void
+    
+    var onChangedAge: (String) -> Void
+    
+    var onClickAddPhoto: () -> Void
+    
+    var onClickFind: () -> Void
+    
+    var onClickSave: () -> Void
+    
+    var body: some View {
         VStack {
             
-            //Photo 
+            //Photo
             ZStack(alignment: .topTrailing){
-                Button(action: {
-                    
-                }) {
+                Button(action: { onClickAddPhoto() }) {
                     Image(systemName: "plus")
                         .resizable()
                         .scaledToFit()
@@ -37,22 +92,22 @@ struct DetailScreen: View {
                     .frame(width: 120, height: 120)
             }.padding(.vertical, .paddingNormal)
             
+            // Field document number and button search
             HStack(alignment: .center){
                 FilledTextField(
-                    text: $viewModel.person.documentNumber,
+                    text: $person.documentNumber,
                     placeholder: "document_number",
                     iconStart: "person",
                     iconEnd: "xmark",
                     onClickIconEnd: {
-                        viewModel.onChangedDocumentNumber(documentNumber: "")
+                        onChangedDocumentNumber("")
                     }
                 ) { _, newValue in
-                    viewModel.onChangedDocumentNumber(documentNumber: newValue)
+                    print("document number new : \(newValue)")
+                    onChangedDocumentNumber(newValue)
                 }
                 
-                Button(action:{
-                    viewModel.findPerson()
-                }) {
+                Button(action:{ onClickFind() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: .paddingMid)
                             .foregroundStyle(Color.primaryColor)
@@ -67,39 +122,41 @@ struct DetailScreen: View {
                 
             }.padding(.horizontal, .paddingNormal)
             
+            // Field name
             FilledTextField(
-                text: $viewModel.person.name,
+                text: $person.name,
                 placeholder: "name"
             ) { _, newValue in
-                viewModel.onChangedName(name: newValue)
+                onChangedName(newValue)
             }.padding(.horizontal, .paddingNormal)
                 .padding(.top,.paddingSmall)
             
+            // Field lastname
             FilledTextField(
-                text: $viewModel.person.lastName,
+                text: $person.lastName,
                 placeholder: "last_name"
             ) { _, newValue in
-                viewModel.onChangedLastName(lastName: newValue)
+                onChangedLastName(newValue)
             }.padding(.horizontal, .paddingNormal)
                 .padding(.top,.paddingSmall)
             
-            @State var age = if(viewModel.person.age == nil){
+            
+            @State var age = if(person.age == nil){
                 ""
             } else {
-                String(viewModel.person.age!)
+                String(person.age!)
             }
+            // Field age
             FilledTextField(
                 text: $age,
                 placeholder: "age"
             ) { _, newValue in
-                viewModel.onChangedAge(age: newValue)
+                onChangedAge(newValue)
             }.padding(.horizontal, .paddingNormal)
                 .padding(.top,.paddingSmall)
             
-            
-            Button(action:{
-                viewModel.save()
-            }) {
+            // Button save
+            Button(action:{ onClickSave()}) {
                 Text("Save")
                     .font(.appBody)
                     .bold()
@@ -112,15 +169,33 @@ struct DetailScreen: View {
             }.padding(.vertical, .paddingNormal)
             
         }
-        .toolbar {
-            ToolbarApp(
-                title: AppScreens.detail.title
-            )
-        }
     }
 }
 
-#Preview("DetailScreen") {
-    let viewModel = DetailViewModel()
-    DetailScreen(viewModel: viewModel)
+#Preview {
+    
+    @Previewable @State var person = PersonModel()
+    DetailScreen(
+        person: $person,
+        onChangedDocumentNumber: { doc in
+            person.documentNumber = doc
+        },
+        onChangedName: { name in
+            
+        },
+        onChangedLastName: { lastname in
+            
+        },
+        onChangedAge: { age in
+            
+        },
+        onClickAddPhoto: {
+            
+        },
+        onClickFind: {
+            
+        }
+    ) {
+        
+    }
 }

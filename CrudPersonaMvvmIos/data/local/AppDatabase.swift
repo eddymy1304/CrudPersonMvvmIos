@@ -27,7 +27,7 @@ class AppDatabase {
         
         let schema = Schema(modelTypes)
         
-        var configurations = ModelConfiguration(
+        let configurations = ModelConfiguration(
             configurationName,
             schema: schema,
             isStoredInMemoryOnly: isStoredInMemoryOnly,

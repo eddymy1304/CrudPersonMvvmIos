@@ -9,17 +9,23 @@ import Foundation
 
 @MainActor
 class DependencyContainer : ObservableObject {
+    
+    private final let db = AppDatabase(for: [PersonEntity.self])
 
+    private final let repository: PersonRepository
     
     init() {
-        print("Init DependencyContainer")
+        repository = PersonRepositoryImpl(context: db.context)
     }
     
     func makeHomeViewModel() -> HomeViewModel {
-        return HomeViewModel()
+        return HomeViewModel(repository: repository)
     }
     
-    func makeDetailViewModel() -> DetailViewModel {
-        return DetailViewModel()
+    func makeDetailViewModel(documentNumber: String) -> DetailViewModel {
+        return DetailViewModel(
+            repository: repository,
+            documentNumber: documentNumber
+        )
     }
 }
