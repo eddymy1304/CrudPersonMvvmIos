@@ -23,6 +23,10 @@ class DetailViewModel : ObservableObject {
     
     @Published var isLoading: Bool = false
     
+    @Published var saveSuccess: Bool = false
+    
+    
+    
     /// Validation App
     /// - Parameters:
     ///     - validate
@@ -56,6 +60,9 @@ class DetailViewModel : ObservableObject {
         switch response {
         case .success():
             print("save person sucess")
+            await MainActor.run {
+                self.saveSuccess = true
+            }
         case .failure(let error):
             print("Error save person: \(error)")
         }

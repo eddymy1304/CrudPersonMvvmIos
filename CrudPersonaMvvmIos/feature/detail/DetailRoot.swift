@@ -8,6 +8,8 @@ import SwiftUI
 
 struct DetailRoot: View {
     
+    @Environment(\.dismiss) private var dismiss
+    
     @StateObject private var viewModel : DetailViewModel
     
     init(viewModel: DetailViewModel) {
@@ -41,6 +43,14 @@ struct DetailRoot: View {
         ) {
             Task {
                 await viewModel.save()
+            }
+        }
+        .onChange(of: viewModel.saveSuccess) { oldValue, newValue in
+            if(newValue) {
+                // demorar un poco la navegacion
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    dismiss()
+                }
             }
         }
         .task {
