@@ -102,7 +102,12 @@ class DetailViewModel : ObservableObject {
     }
     
     func onChangedAge(age: String) {
-        person.age = Int(age) ?? 0
+        if let intAge = Int(age) {
+            person.age = intAge
+        } else {
+            person.age = nil
+        }
+        print(person.age ?? 0)
     }
     
     func getPersonByDocumentNumber() async {
@@ -116,6 +121,7 @@ class DetailViewModel : ObservableObject {
         
         switch response {
         case .success(let data):
+            print("viewmodel getPersonByDocumentNumber age \(data.age ?? 0)")
             person = data
         case .failure(let error):
             print("Error get person by document number: \(error)")

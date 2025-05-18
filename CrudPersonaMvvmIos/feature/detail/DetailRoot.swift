@@ -82,6 +82,8 @@ struct DetailScreen: View {
     
     var onClickSave: () -> Void
     
+    @State var stringAge: String = ""
+    
     var body: some View {
         VStack {
             
@@ -151,19 +153,24 @@ struct DetailScreen: View {
                 .padding(.top,.paddingSmall)
             
             
-            @State var age = if(person.age == nil){
-                ""
-            } else {
-                String(person.age!)
-            }
+
+            
             // Field age
             FilledTextField(
-                text: $age,
+                text: $stringAge,
                 placeholder: "age"
             ) { _, newValue in
                 onChangedAge(newValue)
             }.padding(.horizontal, .paddingNormal)
                 .padding(.top,.paddingSmall)
+                .onChange(of: person.age) { oldValue, newValue in
+                    print("view person age \(newValue ?? 0)")
+                    if let personAge = newValue {
+                        stringAge = String(personAge)
+                    } else {
+                        stringAge = ""
+                    }
+                }
             
             // Button save
             Button(action:{ onClickSave()}) {

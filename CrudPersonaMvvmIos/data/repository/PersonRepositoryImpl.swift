@@ -19,6 +19,7 @@ class PersonRepositoryImpl : PersonRepository {
     func save(person: PersonModel) async -> Result<Void, Error> {
         do {
             let entity = person.asEntity()
+            print(" age: \(String(entity.age ?? 0)) dni: \(entity.documentNumber)")
             context.insert(entity)
             try context.save()
             return .success(())
@@ -69,6 +70,7 @@ class PersonRepositoryImpl : PersonRepository {
             let fetch = FetchDescriptor<PersonEntity>(predicate: predicate)
             let result = try context.fetch(fetch)
             if let person = result.first {
+                print("getPersonByDocumentNumber person age: \(person.age ?? 0)")
                 return .success(person.asDomain())
             }
             return .failure(NotFound())
